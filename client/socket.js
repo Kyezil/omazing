@@ -23,7 +23,7 @@ socket.on('disconnect', function onDisconnect() {
   console.log('disconnected');
 });
 
-socket.on('create player', function onCreatePlayer({ player }) {
+socket.on('local player', function onCreatePlayer({ player }) {
   localPlayer = player;
   console.log(player);
 });
