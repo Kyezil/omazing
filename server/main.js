@@ -29,7 +29,6 @@ Meteor.startup(() => {
           game.players.splice(i, 1);
           this.broadcast.emit('remove player', player.id)
           console.log(game.players);
-          // console.log(game.players.map((el) => el.id));
         }
       }
     });

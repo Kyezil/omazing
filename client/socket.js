@@ -41,7 +41,7 @@ socket.on('remove player', function removePlayer(playerId) {
 })
 
 socket.on('player moved', function onMovePlayer({ id, x, y }) {
-  console.log('player moved: ', id, x, y);
+  // console.log('player moved: ', id, x, y);
   if (socket.id == id) {
     game.moveLocalPlayer({ x, y });
   } else {
