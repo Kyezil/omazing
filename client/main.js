@@ -6,9 +6,9 @@ keys = new Keys();
 game = null;
 
 Template.canvas.onRendered(function canvasOnRendered() {
-	const canvas = this.find('#js-canvas-container');
-	window.game = game = new CanvasGame(canvas);;
-	window.addEventListener('resize', game.onResize.bind(game), false);
+  const canvas = this.find('#js-canvas-container');
+  window.game = game = new CanvasGame(canvas);;
+  window.addEventListener('resize', game.onResize.bind(game), false);
 
   $(window).on('keydown', function(event){
     if (game) {
