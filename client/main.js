@@ -1,22 +1,8 @@
 import { Template } from 'meteor/templating';
-import { ReactiveVar } from 'meteor/reactive-var';
+import { CanvasGame } from './CanvasGame'
 
-import './main.html';
-
-Template.hello.onCreated(function helloOnCreated() {
-  // counter starts at 0
-  this.counter = new ReactiveVar(0);
-});
-
-Template.hello.helpers({
-  counter() {
-    return Template.instance().counter.get();
-  },
-});
-
-Template.hello.events({
-  'click button'(event, instance) {
-    // increment the counter when button is clicked
-    instance.counter.set(instance.counter.get() + 1);
-  },
+Template.canvas.onRendered(function canvasOnRendered() {
+	const canvas = this.find('#js-canvas-container');
+	this.game = new CanvasGame(canvas);
+	window.addEventListener('resize', this.game.onResize.bind(this.game), false);
 });
