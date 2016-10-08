@@ -4,6 +4,7 @@ class Player extends createjs.Shape {
   constructor({ id, x, y, color }, graphic) {
   	super(new createjs.Graphics().beginFill(color).drawCircle(0,0,10));
     this.id = id;
+    this.color = color;
     this.x = x;
     this.y = y;
     this.velx = 0;
@@ -14,7 +15,7 @@ class Player extends createjs.Shape {
   	if (y != undefined) this.y = y;
   }
   fireBullet(angle) {
-    socket.emit('fire bullet', new Bullet({ playerId: this.id, x: this.x, y: this.y, angle}));
+    return new Bullet({ playerId: this.id, x: this.x, y: this.y, color: this.color, angle })
   }
 }
 

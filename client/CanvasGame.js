@@ -1,4 +1,4 @@
-import Player from './models/Player';
+import { Player, Bullet } from './models';
 
 export class CanvasGame {
   constructor(canvas) {
@@ -9,6 +9,7 @@ export class CanvasGame {
     this.size = this.tileSize * this.nTiles;
     this.remotePlayers = {};
     this.localPlayer = null;
+    this.bullets = [];
 
     createjs.Ticker.addEventListener('tick', this.onTick.bind(this));
     this.createBackground();
@@ -55,6 +56,11 @@ export class CanvasGame {
     if (keys != null && keys.check()) {
       socket.emit('move player', keys);
     }
+    for (const bullet of this.bullets) {
+      now = Date.now();
+      bullet.x = bullet.startX + bullet.speed*(now-bullet.timestamp)/1000*Math.cos(bullet.angle);
+      bullet.y = bullet.startY + bullet.speed*(now-bullet.timestamp)/1000*(-Math.sin(bullet.angle));
+    }
   }
   registerRemotePlayer(p) {
     const newPlayer = new Player(p);
@@ -86,10 +92,14 @@ export class CanvasGame {
   fireBullet({ x, y }) {
     const playerPos = this.localPlayer.localToGlobal(0, 0);
     const angle = Math.atan2(playerPos.y - y, x - playerPos.x);
-    this.localPlayer.fireBullet(angle);
+    const bullet = this.localPlayer.fireBullet(angle);
+    this.registerBullet(bullet);
+    socket.emit('fire bullet', bullet);
   }
   registerBullet(bullet) {
-    // TODO: Draw bullet
+    const newBullet = new Bullet(bullet)
+    this.bullets.push(newBullet);
+    this.container.addChild(newBullet);
   }
   onResize(event) {
     this.stage.canvas.width = window.innerWidth;
