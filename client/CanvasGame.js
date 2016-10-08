@@ -45,7 +45,6 @@ export class CanvasGame {
 		this.stage.update();
 	}
 	registerRemotePlayer(p) {
-		if (p.id == undefined) console.log('BUGGG');
 		const newPlayer = new Player(p, this.playerShape);
 		this.remotePlayers[p.id] = newPlayer;
 		this.container.addChild(newPlayer);
@@ -57,7 +56,7 @@ export class CanvasGame {
 	}
 	removePlayer(id) {
 		if (id != this.localPlayerId) {
-			this.stage.removeChild(this.remotePlayers[id]);
+			this.container.removeChild(this.remotePlayers[id]);
 			delete this.remotePlayers[id];
 		}
 	}
