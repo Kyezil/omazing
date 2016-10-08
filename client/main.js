@@ -5,6 +5,7 @@ import { Keys, Player } from './models';
 keys = new Keys();
 localPlayer = {};
 remotePlayers = [];
+game = null
 
 // function update() {
 //   socket.emit('move player', keys);
@@ -13,8 +14,8 @@ remotePlayers = [];
 
 Template.canvas.onRendered(function canvasOnRendered() {
 	const canvas = this.find('#js-canvas-container');
-	window.game = this.game = new CanvasGame(canvas);
-	window.addEventListener('resize', this.game.onResize.bind(this.game), false);
+	window.game = game = new CanvasGame(canvas);;
+	window.addEventListener('resize', game.onResize.bind(game), false);
 
   $(window).on('keydown', function(event){
     if (localPlayer) {

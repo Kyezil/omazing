@@ -28,6 +28,7 @@ socket.on('player moved', function onMovePlayer({ id, x, y }) {
   if (localPlayer.id == id) {
     localPlayer.x = x;
     localPlayer.y = y;
+    game.setPos({ x, y });
     console.log('x: ' + x + ', y: ' + y);
   } else {
     for (const remotePlayer of remotePlayers) {

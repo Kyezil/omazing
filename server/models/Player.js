@@ -3,16 +3,16 @@ class Player {
     this.id = id;
     this.x = x;
     this.y = y;
-    this.moveAmount = 1;
+    this.moveAmount = 10;
   }
 
   move(keys) {
     var prevX = this.x, prevY = this.y;
     // Up key takes priority over down
     if (keys.up) {
-      this.y += this.moveAmount;
-    } else if (keys.down) {
       this.y -= this.moveAmount;
+    } else if (keys.down) {
+      this.y += this.moveAmount;
     };
 
     // Left key takes priority over right
