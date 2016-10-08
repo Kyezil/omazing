@@ -2,7 +2,7 @@ class Game {
   constructor() {
     this.players = [];
   }
-  addPlayer({ player }) {
+  addPlayer(player) {
     this.players.push(player);
   }
   getPlayer(id) {

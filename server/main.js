@@ -15,9 +15,9 @@ Meteor.startup(() => {
       console.log('new client: ' + this.id );
       const player = new Player({ id: this.id, x: 0, y: 0 });
       console.log(player);
-      game.addPlayer({ player });
-      this.emit('init game', { x: player.x, y: player.y });
-      this.broadcast.emit('new remote player', { player })
+      game.addPlayer(player);
+      this.emit('register local player', player);
+      this.broadcast.emit('register remote player', player)
       console.log(game.players.map((el) => el.id));
     });
     client.on('disconnect', function() {

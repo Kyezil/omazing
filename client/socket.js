@@ -18,27 +18,20 @@ socket.on('disconnect', function onDisconnect() {
   console.log('disconnected');
 });
 
-socket.on('init game', function onCreatePlayer({ x, y }) {
-  game.setPos({ x, y })
+socket.on('register local player', function onLocalPlayer(player) {
+  game.registerLocalPlayer(player);
 });
 
-socket.on('new remote player', function newRemotePlayer({ player }) {
-  // game.registerRemotePlayer({ player });
+socket.on('register remote player', function onRemotePlayer(player) {
+  game.registerRemotePlayer(player);
 })
 
 socket.on('player moved', function onMovePlayer({ id, x, y }) {
   console.log('player moved: ', id, x, y);
-  console.log(socket);
   if (socket.id == id) {
-    game.setPos({ x, y });
+    game.moveLocalPlayer({ x, y });
     console.log('x: ' + x + ', y: ' + y);
   } else {
-    // TODO: Handle in CanvasGame
-    // for (const remotePlayer of remotePlayers) {
-    //   if (remotePlayer.id == id) {
-    //     remotePlayer.x = x;
-    //     remotePlayer.y = y;
-    //   }
-    // }
+    game.moveRemotePlayer({ id, x, y });
   }
 });
