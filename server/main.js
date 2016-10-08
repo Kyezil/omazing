@@ -16,7 +16,8 @@ Meteor.startup(() => {
       const player = new Player({ id: this.id, x: 0, y: 0 });
       console.log(player);
       game.addPlayer({ player });
-      this.emit('local player', { player });
+      this.emit('init game', { x: player.x, y: player.y });
+      this.broadcast.emit('new remote player', { player })
       console.log(game.players.map((el) => el.id));
     });
     client.on('disconnect', function() {
@@ -25,6 +26,7 @@ Meteor.startup(() => {
         if (player.id == this.id) {
           console.log('disconnected: ' + this.id);
           game.players.splice(i, 1);
+          this.broadcast.emit('delete remote player', player.id)
           console.log(game.players.map((el) => el.id));
         }
       }

@@ -3,8 +3,6 @@ import { CanvasGame } from './CanvasGame'
 import { Keys, Player } from './models';
 
 keys = new Keys();
-localPlayer = {};
-remotePlayers = [];
 game = null
 
 // function update() {
@@ -18,14 +16,14 @@ Template.canvas.onRendered(function canvasOnRendered() {
 	window.addEventListener('resize', game.onResize.bind(game), false);
 
   $(window).on('keydown', function(event){
-    if (localPlayer) {
+    if (game) {
       keys.onKeyDown(event);
       socket.emit('move player', keys);
     }
   });
 
   $(window).on('keyup', function(event){
-    if (localPlayer) {
+    if (game) {
       keys.onKeyUp(event);
       socket.emit('move player', keys);
     }

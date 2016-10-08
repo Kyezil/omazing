@@ -7,7 +7,7 @@ if (!Response.prototype.setEncoding) {
 }
 
 // Socket io client
-socket = require('socket.io-client')('http://e2ff52ae.ngrok.io');
+socket = require('socket.io-client')('http://c89eff27.ngrok.io');
 
 socket.on('connect', function onConnect() {
   console.log('connected');
@@ -18,24 +18,27 @@ socket.on('disconnect', function onDisconnect() {
   console.log('disconnected');
 });
 
-socket.on('local player', function onCreatePlayer({ player }) {
-  localPlayer = player;
-  console.log(player);
+socket.on('init game', function onCreatePlayer({ x, y }) {
+  game.setPos({ x, y })
 });
+
+socket.on('new remote player', function newRemotePlayer({ player }) {
+  // game.registerRemotePlayer({ player });
+})
 
 socket.on('player moved', function onMovePlayer({ id, x, y }) {
   console.log('player moved: ', id, x, y);
-  if (localPlayer.id == id) {
-    localPlayer.x = x;
-    localPlayer.y = y;
+  console.log(socket);
+  if (socket.id == id) {
     game.setPos({ x, y });
     console.log('x: ' + x + ', y: ' + y);
   } else {
-    for (const remotePlayer of remotePlayers) {
-      if (remotePlayer.id == id) {
-        remotePlayer.x = x;
-        remotePlayer.y = y;
-      }
-    }
+    // TODO: Handle in CanvasGame
+    // for (const remotePlayer of remotePlayers) {
+    //   if (remotePlayer.id == id) {
+    //     remotePlayer.x = x;
+    //     remotePlayer.y = y;
+    //   }
+    // }
   }
 });
