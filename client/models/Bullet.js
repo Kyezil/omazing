@@ -9,7 +9,7 @@ class Bullet extends createjs.Shape {
     this.startY = y;
     this.angle = angle;
     this.timestamp = Date.now();
-    this.speed = 200;
+    this.speed = 300;
   }
 }
 

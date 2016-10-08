@@ -9,6 +9,8 @@ class Player extends createjs.Shape {
     this.y = y;
     this.velx = 0;
     this.vely = 0;
+    this.fireDelay = 1000;
+    this.lastFiredTimestamp = 0;
   }
   setPos({x, y}) {
   	if (x != undefined) this.x = x;

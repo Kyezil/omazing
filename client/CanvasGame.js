@@ -90,11 +90,15 @@ export class CanvasGame {
     this.updateContainer();
   }
   fireBullet({ x, y }) {
-    const playerPos = this.localPlayer.localToGlobal(0, 0);
-    const angle = Math.atan2(playerPos.y - y, x - playerPos.x);
-    const bullet = this.localPlayer.fireBullet(angle);
-    this.registerBullet(bullet);
-    socket.emit('fire bullet', bullet);
+    now = Date.now();
+    if (this.localPlayer.lastFiredTimestamp < now - this.localPlayer.fireDelay) {
+      this.localPlayer.lastFiredTimestamp = now;
+      const playerPos = this.localPlayer.localToGlobal(0, 0);
+      const angle = Math.atan2(playerPos.y - y, x - playerPos.x);
+      const bullet = this.localPlayer.fireBullet(angle);
+      this.registerBullet(bullet);
+      socket.emit('fire bullet', bullet);
+    }
   }
   registerBullet(bullet) {
     const newBullet = new Bullet(bullet)

@@ -5,7 +5,7 @@ class Player {
     this.y = y;
     this.color = '#'+Math.floor(Math.random()*16777215).toString(16);
     this.moveAmount = 10;
-    this.fireDelay = 5000;
+    this.fireDelay = 1000;
     this.lastFiredTimestamp = 0;
   }
   move(keys) {
