@@ -1,5 +1,3 @@
-import createjs from 'createjs-easeljs';
-
 export class CanvasGame {
 	constructor(canvas) {
 		window.createjs = createjs;
