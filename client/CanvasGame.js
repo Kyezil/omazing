@@ -64,6 +64,8 @@ export class CanvasGame {
 	moveRemotePlayer({id, x, y}) {
 		if (this.remotePlayers.hasOwnProperty(id)) {
 			this.remotePlayers[id].setPos({x, y});
+		} else {
+			this.registerRemotePlayer({id, x, y});
 		}
 	}
 	moveLocalPlayer({x, y}) {
