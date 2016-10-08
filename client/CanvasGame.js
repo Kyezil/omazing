@@ -6,7 +6,6 @@ export class CanvasGame {
 		window.stage = this.stage = new createjs.Stage(canvas)
 		this.tileSize = 20; // size in pixel
 		this.nTiles = 100;
-		this.pos = {x: 0, y: 0};
 		this.size = this.tileSize * this.nTiles;
 		this.remotePlayers = {};
 		this.localPlayer = null;
@@ -46,6 +45,7 @@ export class CanvasGame {
 		this.stage.update();
 	}
 	registerRemotePlayer(p) {
+		if (p.id == undefined) console.log('BUGGG');
 		const newPlayer = new Player(p, this.playerShape);
 		this.remotePlayers[p.id] = newPlayer;
 		this.container.addChild(newPlayer);
