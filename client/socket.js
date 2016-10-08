@@ -26,6 +26,11 @@ socket.on('register remote player', function onRemotePlayer(player) {
   game.registerRemotePlayer(player);
 })
 
+socket.on('remove player', function removePlayer(playerId) {
+  console.log('remove player', playerId);
+  game.removePlayer(playerId);
+})
+
 socket.on('player moved', function onMovePlayer({ id, x, y }) {
   console.log('player moved: ', id, x, y);
   if (socket.id == id) {
