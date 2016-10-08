@@ -1,6 +1,6 @@
 class Player extends createjs.Shape {
-  constructor({ id, x, y }, graphic) {
-  	super(graphic);
+  constructor({ id, x, y, color}, graphic) {
+  	super(graphic.beginFill(color));
     this.id = id;
     this.x = x;
     this.y = y;
