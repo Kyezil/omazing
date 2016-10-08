@@ -46,13 +46,18 @@ const Keys = function(up, left, right, down) {
 		};
 	};
 
+	var check = function(e) {
+		return this.left || this.right || this.up || this.down;
+	}
+
 	return {
 		up: up,
 		left: left,
 		right: right,
 		down: down,
 		onKeyDown: onKeyDown,
-		onKeyUp: onKeyUp
+		onKeyUp: onKeyUp,
+		check: check
 	};
 };
 

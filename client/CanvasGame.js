@@ -43,6 +43,9 @@ export class CanvasGame {
 	}
 	onTick() {
 		this.stage.update();
+		if (keys != null && keys.check()) {
+			socket.emit('move player', keys);
+		}
 	}
 	registerRemotePlayer(p) {
 		const newPlayer = new Player(p, this.playerShape);
