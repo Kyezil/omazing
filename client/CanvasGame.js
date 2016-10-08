@@ -47,7 +47,7 @@ export class CanvasGame {
 	}
 	registerRemotePlayer(p) {
 		const newPlayer = new Player(p, this.playerShape);
-		this.players[p.id] = newPlayer;
+		this.remotePlayers[p.id] = newPlayer;
 		this.container.addChild(newPlayer);
 	}
 	registerLocalPlayer(p) {
@@ -57,7 +57,7 @@ export class CanvasGame {
 	}
 	removePlayer(id) {
 		if (id != this.localPlayerId)
-			delete this.players[id];
+			delete this.remotePlayers[id];
 	}
 	moveRemotePlayer({id, x, y}) {
 		if (this.remotePlayers.hasOwnProperty(id)) {
