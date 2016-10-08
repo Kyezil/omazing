@@ -15,8 +15,7 @@ Meteor.startup(() => {
   io.on('connection', function(client) {
     client.on('new player', function() {
       console.log('new client: ' + this.id );
-      const player = new Player(this.id);
-      game.players.push(player);
+      game.addPlayer(new Player(this.id));
       console.log(game.players.map((el) => el.id));
     })
     client.on('disconnect', function() {
@@ -25,7 +24,7 @@ Meteor.startup(() => {
         if (player.id == this.id) {
           console.log('disconnected: ' + this.id);
           game.players.splice(i, 1);
-          console.log(game.players);
+          console.log(game.players.map((el) => el.id));
         }
       }
     })
