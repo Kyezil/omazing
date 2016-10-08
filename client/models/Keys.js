@@ -12,15 +12,23 @@ const Keys = function(up, left, right, down) {
 			c = e.which;
 		switch (c) {
 			// Controls
+			case 72: // h
+			case 65: // a
 			case 37: // Left
 				that.left = true;
 				break;
+			case 75: // k
+			case 87: // w
 			case 38: // Up
 				that.up = true;
 				break;
+			case 76: // l
+			case 68: // d
 			case 39: // Right
 				that.right = true; // Will take priority over the left key
 				break;
+			case 74: // j
+			case 83: // s
 			case 40: // Down
 				that.down = true;
 				break;
@@ -31,15 +39,23 @@ const Keys = function(up, left, right, down) {
 		var that = this,
 			c = e.which;
 		switch (c) {
+			case 72: // h
+			case 65: // a
 			case 37: // Left
 				that.left = false;
 				break;
+			case 75: // k
+			case 87: // w
 			case 38: // Up
 				that.up = false;
 				break;
+			case 76: // l
+			case 68: // d
 			case 39: // Right
 				that.right = false;
 				break;
+			case 74: // j
+			case 83: // s
 			case 40: // Down
 				that.down = false;
 				break;
