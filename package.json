@@ -5,9 +5,11 @@
     "start": "meteor run"
   },
   "dependencies": {
+    "bufferutil": "^1.2.1",
     "createjs-easeljs": "^0.8.2",
     "meteor-node-stubs": "^0.2.3",
     "socket.io": "^1.5.0",
-    "socket.io-client": "^1.5.0"
+    "socket.io-client": "^1.5.0",
+    "utf-8-validate": "^1.2.1"
   }
 }
