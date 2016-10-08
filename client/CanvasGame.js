@@ -4,8 +4,8 @@ export class CanvasGame {
   constructor(canvas) {
     window.createjs = createjs;
     window.stage = this.stage = new createjs.Stage(canvas)
-    this.tileSize = 20; // size in pixel
-    this.nTiles = 100;
+    this.tileSize = 30; // size in pixel
+    this.nTiles = 50;
     this.size = this.tileSize * this.nTiles;
     this.remotePlayers = {};
     this.localPlayer = null;
@@ -24,6 +24,8 @@ export class CanvasGame {
     this.stage.addChild(this.container);
     this.map = new createjs.Shape();
     this.container.addChild(this.map);
+    this.grid = new createjs.Shape();
+    this.container.addChild(this.grid);
   }
   updateContainer() {
     this.container.x = this.stage.canvas.width/2 - this.localPlayer.x;
@@ -35,6 +37,18 @@ export class CanvasGame {
     this.map.graphics.beginFill('#fff');
     this.map.graphics.drawRect(0,0,this.container.width, this.container.height);
     this.map.graphics.endFill();
+    // draw lines
+    this.grid.graphics.clear();
+    this.grid.graphics.beginStroke('#f0f0f0');
+    for (let i = 0; i <= this.size; i += this.tileSize) {
+    	this.grid.graphics.moveTo(i,0);
+    	this.grid.graphics.lineTo(i, this.size);
+    }
+    for (let i = 0; i <= this.size; i += this.tileSize) {
+    	this.grid.graphics.moveTo(0,i);
+    	this.grid.graphics.lineTo(this.size, i);
+    }
+    this.grid.graphics.endStroke();
   }
   onTick() {
     this.stage.update();
@@ -72,10 +86,8 @@ export class CanvasGame {
   onResize(event) {
     this.stage.canvas.width = window.innerWidth;
     this.stage.canvas.height = window.innerHeight;
-
     this.bg.graphics.clear();
     this.bg.graphics.beginFill('#222').drawRect(0,0,this.stage.canvas.width, this.stage.canvas.height);
-
     if (this.localPlayer !== null)
       this.updateContainer();
   }
