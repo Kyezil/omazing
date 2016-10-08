@@ -14,7 +14,6 @@ Meteor.startup(() => {
     client.on('new player', function() {
       console.log('new client: ' + this.id );
       const player = new Player({ id: this.id, x: 0, y: 0 });
-      console.log(player);
       this.emit('register local player', player);
       this.emit('register remote players', game.players);
       this.broadcast.emit('register remote player', player)
