@@ -20,6 +20,10 @@ export class CanvasGame {
 		this.stage.addChild(this.container);
 		this.map = new createjs.Shape();
 		this.container.addChild(this.map);
+
+		this.circle = new createjs.Shape();
+		this.circle.graphics.beginFill('red').drawCircle(0,0,10);
+		this.stage.addChild(this.circle);
 	}
 	updateContainer() {
 		this.container.x = this.stage.canvas.width/2 - this.pos.x;
@@ -36,8 +40,8 @@ export class CanvasGame {
 		this.stage.update();
 	}
 	setPos({x, y}) {
-		this.pos.x = x;
-		this.pos.y = y;
+		if (x != undefined) this.pos.x = x;
+		if (y != undefined) this.pos.y = y;
 		this.updateContainer();
 	}
 	onResize(event) {
@@ -46,6 +50,9 @@ export class CanvasGame {
 
 		this.bg.graphics.clear();
 		this.bg.graphics.beginFill('#222').drawRect(0,0,this.stage.canvas.width, this.stage.canvas.height);
+
+		this.circle.x = this.stage.canvas.width / 2;
+		this.circle.y = this.stage.canvas.height / 2;
 
 		this.updateContainer();
 	}
