@@ -60,6 +60,7 @@ export class CanvasGame {
       now = Date.now();
       bullet.x = bullet.startX + bullet.speed*(now-bullet.timestamp)/1000*Math.cos(bullet.angle);
       bullet.y = bullet.startY + bullet.speed*(now-bullet.timestamp)/1000*(-Math.sin(bullet.angle));
+      bullet.setBounds(bullet.x-5, bullet.y-5, 10, 10);
     }
   }
   registerRemotePlayer(p) {

@@ -1,6 +1,6 @@
 class Bullet extends createjs.Shape {
   constructor({ playerId, x, y, angle, color }) {
-  	super(new createjs.Graphics().beginFill(color).drawCircle(0,0,5));
+  	super(new createjs.Graphics().beginFill(color).drawCircle(0,0,5)).setBounds(x-5, y-5, 10, 10);
     this.playerId = playerId;
     this.color = color;
     this.x = x;
