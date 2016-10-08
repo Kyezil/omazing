@@ -50,10 +50,59 @@ class Maze {
 			}
 		}
 	}
+	fillMaze(regions) {
+		for (let i = 1; i < this.size.n; i += 2) {
+			for (let j = 1; j < this.size.m; j += 2) {
+				if (regions[i][j] != -1) this.growMaze(regions, i, j);
+			}
+		}
+	}
+	growMaze(regions, i, j) {
+		const cells = [];
+		let lastDir = null;
+		regions[i][j] = 1; // path
+		cells.push({x: i, y: j});
+		while (cells.length > 0) {
+			const cell = cells[cells.length - 1];
+			// compute possible directions
+			const dirs = [];
+			for (let i = -1; i <= 1; ++i) {
+				for (let j = -1; j <= 1; ++j) {
+					if (i == 0 || j == 0) {
+						if (this.p_canCarve(regions, cell, i, j)) dirs.push({dx: i, dy: j});
+					}
+				}
+			}
+			// prefer carving in same direction if windy
+			if (dirs.length > 0) {
+				let dir;
+				if (dirs.indexOf(lastDir) != -1 && rngRange(1,100) > this.windingPercent) dir = lastDir;
+				else {
+					const indexRandom = rngRange(0, dirs.length-1);
+					dir = dirs[indexRandom];
+				}
+				const newCell = {x: cell.x + 2*dir.dx, y: cell.y + 2*dir.dy};
+				regions[newCell.x][newCell.y] = regions[cell.x + dir.dx][cell.y + dir.dy] = 1;
+				cells.push(newCell)
+				lastDir = dir;
+			} else { // no adjacent cells
+				cells.pop();
+				lastDir = null;
+			}
+		}
+	}
+	p_canCarve(regions, cell, dx, dy) {
+		const outerCell = {x: cell.x + 3*dx, y: cell.y + 3*dy}; // if not out of the box
+		if (outerCell.x < 0 || outerCell.y < 0 || outerCell.x >= this.size.n || outerCell.y >= this.size.m) return false;
+		return regions[cell.x + 2*dx][cell.y + 2*dy] == -1; // if its wall
+	}
 	generateMaze() {
 		const regs = Array.apply(null, Array(this.size.n)).map(Number.prototype.valueOf, -1);
 		const regions = regs.map((i) => regs.slice());
 		this.addRooms(regions);
+		this.printMatrix(regions);
+		console.log('XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX')
+		this.fillMaze(regions);
 		this.printMatrix(regions);
 		return regions;
 	}
@@ -62,6 +111,7 @@ class Maze {
 			let str = "";
 			for (let j = 0; j < this.size.m; ++j) {
 				if (regions[i][j] == 0) str += '.';
+				else if (regions[i][j] == 1) str += '.';
 				else str += '@';
 			}
 			console.log(str);
