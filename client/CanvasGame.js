@@ -83,6 +83,14 @@ export class CanvasGame {
     this.localPlayer.setPos({x, y});
     this.updateContainer();
   }
+  fireBullet({ x, y }) {
+    const playerPos = this.localPlayer.localToGlobal(0, 0);
+    const angle = Math.atan2(playerPos.y - y, x - playerPos.x);
+    this.localPlayer.fireBullet(angle);
+  }
+  registerBullet(bullet) {
+    // TODO: Draw bullet
+  }
   onResize(event) {
     this.stage.canvas.width = window.innerWidth;
     this.stage.canvas.height = window.innerHeight;

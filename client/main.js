@@ -5,6 +5,13 @@ import { Keys, Player } from './models';
 keys = new Keys();
 game = null;
 
+function getCursorPosition(canvas, event) {
+    var rect = canvas.getBoundingClientRect();
+    var x = event.clientX - rect.left;
+    var y = event.clientY - rect.top;
+    return { x, y };
+}
+
 Template.canvas.onRendered(function canvasOnRendered() {
   const canvas = this.find('#js-canvas-container');
   window.game = game = new CanvasGame(canvas);;
@@ -22,3 +29,10 @@ Template.canvas.onRendered(function canvasOnRendered() {
     }
   });
 });
+
+Template.canvas.events({
+  'click': function(event, template) {
+    pos = getCursorPosition(template.find('#js-canvas-container'), event);
+    game.fireBullet(pos);
+  }
+})

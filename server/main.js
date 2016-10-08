@@ -39,7 +39,14 @@ Meteor.startup(() => {
       data = { id: this.id, x: player.x, y: player.y };
       this.emit('player moved', data);
       this.broadcast.emit('player moved', data);
-    })
+    });
+    client.on('fire bullet', function(bullet) {
+      player = game.getPlayer(bullet.playerId);
+      if (player.lastFiredTimestamp < new Date() - player.fireDelay) {
+        this.emit('bullet fired', bullet);
+        this.broadcast.emit('bullet fired', bullet);
+      }
+    });
   });
 
   try {
