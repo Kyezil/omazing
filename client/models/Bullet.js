@@ -1,5 +1,5 @@
 class Bullet extends createjs.Shape {
-  constructor({ playerId, x, y, angle, color }) {
+  constructor({ playerId, x, y, angle, color, timestamp = Date.now() }) {
   	super(new createjs.Graphics().beginFill(color).drawCircle(0,0,5)).setBounds(x-5, y-5, 10, 10);
     this.playerId = playerId;
     this.color = color;
@@ -8,7 +8,7 @@ class Bullet extends createjs.Shape {
     this.startX = x;
     this.startY = y;
     this.angle = angle;
-    this.timestamp = Date.now();
+    this.timestamp = timestamp;
     this.speed = 300;
   }
 }
