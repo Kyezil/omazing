@@ -1,21 +1,22 @@
 import { Meteor } from 'meteor/meteor';
 import http from 'http';
 import socket_io from 'socket.io';
-import Game from './Game';
-import Player from './Player';
+import { Game, Player } from '/libs/models';
 
 const PORT = 8080;
 
 Meteor.startup(() => {
   const server = http.createServer();
   const io = socket_io(server);
-
   const game = new Game();
 
   io.on('connection', function(client) {
     client.on('new player', function() {
       console.log('new client: ' + this.id );
-      game.addPlayer(new Player(this.id));
+      const player = new Player({ id: this.id, x: 0, y: 0 });
+      console.log(player);
+      game.addPlayer({ player });
+      this.emit('create player', { player });
       console.log(game.players.map((el) => el.id));
     })
     client.on('disconnect', function() {
