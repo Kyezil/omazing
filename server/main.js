@@ -15,13 +15,11 @@ Meteor.startup(() => {
       console.log('new client: ' + this.id );
       const player = new Player({ id: this.id, x: 0, y: 0 });
       console.log(player);
-      for (const player in game.players) {
-        this.emit('register remote player', player);
-      }
-      game.addPlayer(player);
       this.emit('register local player', player);
+      this.emit('register remote players', game.players);
       this.broadcast.emit('register remote player', player)
-      console.log(game.players.map((el) => el.id));
+      game.addPlayer(player);
+      console.log(game.players);
     });
     client.on('disconnect', function() {
       for (let i = 0; i < game.players.length; i++) {
@@ -30,7 +28,8 @@ Meteor.startup(() => {
           console.log('disconnected: ' + this.id);
           game.players.splice(i, 1);
           this.broadcast.emit('remove player', player.id)
-          console.log(game.players.map((el) => el.id));
+          console.log(game.players);
+          // console.log(game.players.map((el) => el.id));
         }
       }
     });

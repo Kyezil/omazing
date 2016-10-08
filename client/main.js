@@ -3,7 +3,7 @@ import { CanvasGame } from './CanvasGame'
 import { Keys, Player } from './models';
 
 keys = new Keys();
-game = null
+game = null;
 
 // function update() {
 //   socket.emit('move player', keys);
@@ -25,7 +25,7 @@ Template.canvas.onRendered(function canvasOnRendered() {
   $(window).on('keyup', function(event){
     if (game) {
       keys.onKeyUp(event);
-      socket.emit('move player', keys);
+      // socket.emit('move player', keys);
     }
   });
 });
