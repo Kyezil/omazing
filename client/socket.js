@@ -12,7 +12,7 @@ let localPlayer;
 let remotePlayers = [];
 
 // Socket io client
-let socket = require('socket.io-client')('http://890f20ac.ngrok.io');
+socket = require('socket.io-client')('http://890f20ac.ngrok.io');
 
 socket.on('connect', function onConnect() {
   console.log('connected');
@@ -28,8 +28,18 @@ socket.on('local player', function onCreatePlayer({ player }) {
   console.log(player);
 });
 
-socket.on('move', function onMovePlayer({ x, y }) {
-  localPlayer.x = x;
-  localPlayer.y = y;
-  console.log('x: ' + x + ', y: ' + y);
+socket.on('player move', function onMovePlayer({ id, x, y }) {
+  console.log('player moved: ', id, x, y);
+  if (localPlayer.id == id) {
+    localPlayer.x = x;
+    localPlayer.y = y;
+    console.log('x: ' + x + ', y: ' + y);
+  } else {
+    for (const remotePlayer of remotePlayers) {
+      if (remotePlayer.id == id) {
+        remotePlayer.x = x;
+        remotePlayer.y = y;
+      }
+    }
+  }
 });
