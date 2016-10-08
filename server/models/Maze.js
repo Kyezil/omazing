@@ -25,7 +25,7 @@ class Maze {
 		this.extraConnectorChange = 20;
 		this.roomExtraSize = 1;
 		this.windingPercent = 0;
-		this.numRoomTries = 40;
+		this.numRoomTries = 20;
 	}
 	addRooms(regions) {
 		const rooms = [];
