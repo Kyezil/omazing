@@ -41,7 +41,9 @@ Meteor.startup(() => {
     });
     client.on('fire bullet', function(bullet) {
       player = game.getPlayer(bullet.playerId);
-      if (player.lastFiredTimestamp < new Date() - player.fireDelay) {
+      now = new Date();
+      if (player.lastFiredTimestamp < now - player.fireDelay) {
+        player.lastFiredTimestamp = now;
         this.emit('bullet fired', bullet);
         this.broadcast.emit('bullet fired', bullet);
       }
