@@ -39,6 +39,7 @@ export class CanvasGame {
 	onTick() {
 		this.stage.update();
 		if (keys != null && keys.check()) {
+			this.localPlayer.move(keys);
 			socket.emit('move player', keys);
 		}
 	}

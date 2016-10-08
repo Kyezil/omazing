@@ -11,6 +11,24 @@ class Player extends createjs.Shape {
   	if (x != undefined) this.x = x;
   	if (y != undefined) this.y = y;
   }
+  move(keys) {
+    var prevX = this.x, prevY = this.y;
+    // Up key takes priority over down
+    if (keys.up) {
+      this.y -= this.moveAmount;
+    } else if (keys.down) {
+      this.y += this.moveAmount;
+    };
+
+    // Left key takes priority over right
+    if (keys.left) {
+      this.x -= this.moveAmount;
+    } else if (keys.right) {
+      this.x += this.moveAmount;
+    };
+
+    return (prevX != this.x || prevY != this.y) ? true : false;
+  }
 }
 
 export default Player;

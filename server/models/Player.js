@@ -6,7 +6,6 @@ class Player {
     this.color = '#'+Math.floor(Math.random()*16777215).toString(16);
     this.moveAmount = 10;
   }
-
   move(keys) {
     var prevX = this.x, prevY = this.y;
     // Up key takes priority over down
