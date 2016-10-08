@@ -10,11 +10,6 @@ export class CanvasGame {
 		this.remotePlayers = {};
 		this.localPlayer = null;
 
-		// player graphic
-		this.playerShape = new createjs.Graphics();
-		this.playerShape.beginFill('red');
-		this.playerShape.drawCircle(0,0,10);
-
 		createjs.Ticker.addEventListener('tick', this.onTick.bind(this));
 		this.createBackground();
 		this.createContainer();
@@ -48,12 +43,12 @@ export class CanvasGame {
 		}
 	}
 	registerRemotePlayer(p) {
-		const newPlayer = new Player(p, this.playerShape);
+		const newPlayer = new Player(p);
 		this.remotePlayers[p.id] = newPlayer;
 		this.container.addChild(newPlayer);
 	}
 	registerLocalPlayer(p) {
-		this.localPlayer = new Player(p, this.playerShape);
+		this.localPlayer = new Player(p);
 		this.container.addChild(this.localPlayer);
 		this.updateContainer();
 	}
