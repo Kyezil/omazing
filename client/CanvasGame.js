@@ -56,8 +56,10 @@ export class CanvasGame {
 		this.updateContainer();
 	}
 	removePlayer(id) {
-		if (id != this.localPlayerId)
+		if (id != this.localPlayerId) {
+			this.stage.removeChild(this.remotePlayers[id]);
 			delete this.remotePlayers[id];
+		}
 	}
 	moveRemotePlayer({id, x, y}) {
 		if (this.remotePlayers.hasOwnProperty(id)) {
