@@ -1,7 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import http from 'http';
 import socket_io from 'socket.io';
-import { Game, Player } from '/libs/models';
+import { Game, Player } from './models';
 
 const PORT = 8080;
 
@@ -29,16 +29,13 @@ Meteor.startup(() => {
         }
       }
     });
-    client.on('player move', function(keyCode) {
-      console.log('move ' + keyCode);
+    client.on('move player', function(keys) {
+      console.log('moving player ' + this.id);
       player = game.getPlayer(this.id);
-      player.move(keyCode);
-      this.emit('player move', {
-        id: this.id, x: player.x, y: player.y
-      });
-      this.broadcast.emit('player move', {
-        id: this.id, x: player.x, y: player.y
-      });
+      player.move(keys);
+      data = { id: this.id, x: player.x, y: player.y };
+      this.emit('player moved', data);
+      this.broadcast.emit('player moved', data);
     })
   });
 

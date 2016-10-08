@@ -1,5 +1,3 @@
-import { Player } from '/libs/models';
-
 // Hack https://github.com/socketio/socket.io-client/issues/961
 import Response from 'meteor-node-stubs/node_modules/http-browserify/lib/response';
 if (!Response.prototype.setEncoding) {
@@ -8,11 +6,8 @@ if (!Response.prototype.setEncoding) {
   }
 }
 
-let localPlayer;
-let remotePlayers = [];
-
 // Socket io client
-socket = require('socket.io-client')('http://890f20ac.ngrok.io');
+socket = require('socket.io-client')('http://e2ff52ae.ngrok.io');
 
 socket.on('connect', function onConnect() {
   console.log('connected');
@@ -28,7 +23,7 @@ socket.on('local player', function onCreatePlayer({ player }) {
   console.log(player);
 });
 
-socket.on('player move', function onMovePlayer({ id, x, y }) {
+socket.on('player moved', function onMovePlayer({ id, x, y }) {
   console.log('player moved: ', id, x, y);
   if (localPlayer.id == id) {
     localPlayer.x = x;
