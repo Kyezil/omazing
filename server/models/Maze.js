@@ -23,9 +23,9 @@ class Maze {
 	constructor(n, m) {
 		this.size = { n, m };
 		this.extraConnectorChange = 20;
-		this.roomExtraSize = -2;
+		this.roomExtraSize = 1;
 		this.windingPercent = 0;
-		this.numRoomTries = 20;
+		this.numRoomTries = 40;
 	}
 	addRooms(regions) {
 		const rooms = [];
@@ -96,14 +96,15 @@ class Maze {
 		if (outerCell.x < 0 || outerCell.y < 0 || outerCell.x >= this.size.n || outerCell.y >= this.size.m) return false;
 		return regions[cell.x + 2*dx][cell.y + 2*dy] == -1; // if its wall
 	}
+	connectRegions(regions) {
+
+	}
 	generateMaze() {
 		const regs = Array.apply(null, Array(this.size.n)).map(Number.prototype.valueOf, -1);
 		const regions = regs.map((i) => regs.slice());
 		this.addRooms(regions);
-		this.printMatrix(regions);
-		console.log('XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX')
 		this.fillMaze(regions);
-		this.printMatrix(regions);
+		this.connectRegions(regions);
 		return regions;
 	}
 	printMatrix(regions) {
