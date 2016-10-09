@@ -83,6 +83,11 @@ export class CanvasGame {
       bullet.x = bullet.startX + bullet.speed*(now-bullet.timestamp)/1000*Math.cos(bullet.angle);
       bullet.y = bullet.startY + bullet.speed*(now-bullet.timestamp)/1000*(-Math.sin(bullet.angle));
 
+      if (this.isWall({ x: bullet.x, y: bullet.y })) {
+          this.container.removeChild(bullet);
+          this.bullets.splice(i, 1);
+      }
+
       const players = Object.keys(this.remotePlayers).map((key) => this.remotePlayers[key]);
       if (bullet.playerId != this.localPlayer.id) {
         players.push(this.localPlayer);
@@ -92,6 +97,7 @@ export class CanvasGame {
         if (player.collidesWith(bullet)) {
           this.container.removeChild(bullet);
           this.bullets.splice(i, 1);
+          console.log('dead!');
         }
       }
     }
