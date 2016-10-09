@@ -66,6 +66,12 @@ export class CanvasGame {
   		}
   	}
   }
+  isWall({x, y}) {
+    x = Math.floor(x/this.tileSize);
+    y = Math.floor(y/this.tileSize);
+    if (x < 0 || y < 0 || x >= this.nTiles || y >= this.nTiles) return false;
+    return mazeM[x][y] == -1;
+  }
   onTick() {
     this.stage.update();
     if (keys != null && keys.check()) {
