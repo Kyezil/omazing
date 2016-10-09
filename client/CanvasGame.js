@@ -1,11 +1,13 @@
 import { Player, Bullet } from './models';
 
+const mazeM = JSON.parse("[[-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1],[-1,1,1,1,1,1,1,1,1,1,1,1,-1,1,1,1,1,1,-1,-1],[-1,1,-1,-1,-1,-1,-1,-1,-1,-1,-1,1,-1,-1,-1,1,-1,1,-1,-1],[-1,1,0,1,0,1,0,1,0,1,-1,1,1,1,1,1,-1,1,-1,-1],[-1,0,0,0,0,0,0,0,0,0,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1],[-1,1,0,1,0,1,0,1,0,1,-1,1,0,1,0,1,0,1,-1,-1],[-1,0,0,0,0,0,0,0,0,0,-1,0,0,0,0,0,0,0,-1,-1],[-1,1,0,1,0,1,0,1,0,1,-1,1,0,1,0,1,0,1,-1,-1],[-1,0,0,0,0,0,0,0,0,0,-1,0,0,0,0,0,0,0,-1,-1],[-1,1,0,1,0,1,0,1,0,1,-1,1,0,1,0,1,0,1,-1,-1],[-1,1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1],[-1,1,1,1,1,1,-1,1,-1,1,0,1,-1,1,1,1,1,1,-1,-1],[-1,-1,-1,-1,-1,1,-1,1,-1,0,0,0,-1,1,-1,-1,-1,-1,-1,-1],[-1,1,1,1,-1,1,1,1,-1,1,0,1,-1,1,-1,1,0,1,-1,-1],[-1,1,-1,1,-1,-1,-1,1,-1,-1,-1,-1,-1,1,-1,0,0,0,-1,-1],[-1,1,-1,1,1,1,-1,1,-1,1,1,1,-1,1,-1,1,0,1,-1,-1],[-1,1,-1,-1,-1,1,-1,1,-1,1,-1,1,-1,1,-1,0,0,0,-1,-1],[-1,1,1,1,-1,1,1,1,1,1,-1,1,1,1,-1,1,0,1,-1,-1],[-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,0,0,0,-1,-1],[-1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,1,-1,-1]]");
+
 export class CanvasGame {
   constructor(canvas) {
     window.createjs = createjs;
     window.stage = this.stage = new createjs.Stage(canvas)
-    this.tileSize = 30; // size in pixel
-    this.nTiles = 50;
+    this.tileSize = 20; // size in pixel
+    this.nTiles = 60;
     this.size = this.tileSize * this.nTiles;
     this.remotePlayers = {};
     this.localPlayer = null;
@@ -27,6 +29,8 @@ export class CanvasGame {
     this.container.addChild(this.map);
     this.grid = new createjs.Shape();
     this.container.addChild(this.grid);
+    this.maze = new createjs.Shape();
+    this.container.addChild(this.maze);
   }
   updateContainer() {
     this.container.x = this.stage.canvas.width/2 - this.localPlayer.x;
@@ -50,6 +54,23 @@ export class CanvasGame {
     	this.grid.graphics.lineTo(this.size, i);
     }
     this.grid.graphics.endStroke();
+  }
+  updateMaze() {
+  	this.maze.graphics.clear();
+  	this.maze.graphics.beginFill('#ea2');
+  	for (let i = 0; i < this.nTiles/3; ++i) {
+  		for (let j = 0; j < this.nTiles/3; ++j) {
+  			if (mazeM[i][j] == -1) {
+  				if (j >= 1 && mazeM[i][j-1] == -1) {
+  					this.maze.graphics.drawRect(i*this.tileSize*3+1, j*this.tileSize*3-1, this.tileSize, this.tileSize*2);
+  				}
+  				this.maze.graphics.drawRect(i*this.tileSize*3+1, j*this.tileSize*3+1, this.tileSize, this.tileSize);
+  				if (i >= 1 && mazeM[i-1][j] == -1) {
+  					this.maze.graphics.drawRect(i*this.tileSize*3-1, j*this.tileSize*3+1, this.tileSize*2, this.tileSize);
+  				}
+	  		}
+  		}
+  	}
   }
   onTick() {
     this.stage.update();
@@ -125,5 +146,6 @@ export class CanvasGame {
     this.bg.graphics.beginFill('#222').drawRect(0,0,this.stage.canvas.width, this.stage.canvas.height);
     if (this.localPlayer !== null)
       this.updateContainer();
-  }
+  	this.updateMaze();
+  	}
 }
