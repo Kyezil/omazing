@@ -94,7 +94,7 @@ class Maze {
 	p_canCarve(regions, cell, dx, dy) {
 		const outerCell = {x: cell.x + 3*dx, y: cell.y + 3*dy}; // if not out of the box
 		if (outerCell.x < 0 || outerCell.y < 0 || outerCell.x >= this.size.n || outerCell.y >= this.size.m) return false;
-		return regions[cell.x + 2*dx][cell.y + 2*dy] == -1; // if its wall
+		return (regions[cell.x + 2*dx][cell.y + 2*dy] == -1 && oneIn(1) == 1); // if its wall
 	}
 	connectRegions(regions) {
 
@@ -103,8 +103,9 @@ class Maze {
 		const regs = Array.apply(null, Array(this.size.n)).map(Number.prototype.valueOf, -1);
 		const regions = regs.map((i) => regs.slice());
 		this.addRooms(regions);
-		//this.fillMaze(regions);
+		this.fillMaze(regions);
 		//this.connectRegions(regions);
+		this.printMatrix(regions);
 		return regions;
 	}
 	printMatrix(regions) {
