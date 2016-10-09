@@ -46,27 +46,27 @@ export class CanvasGame {
     this.grid.graphics.clear();
     this.grid.graphics.beginStroke('#f0f0f0');
     for (let i = 0; i <= this.size; i += this.tileSize) {
-    	this.grid.graphics.moveTo(i,0);
-    	this.grid.graphics.lineTo(i, this.size);
+      this.grid.graphics.moveTo(i,0);
+      this.grid.graphics.lineTo(i, this.size);
     }
     for (let i = 0; i <= this.size; i += this.tileSize) {
-    	this.grid.graphics.moveTo(0,i);
-    	this.grid.graphics.lineTo(this.size, i);
+      this.grid.graphics.moveTo(0,i);
+      this.grid.graphics.lineTo(this.size, i);
     }
     this.grid.graphics.endStroke();
   }
   updateMaze() {
-  	this.maze.graphics.clear();
-  	this.maze.graphics.beginFill('#ea2');
-  	for (let i = 0; i < this.nTiles; ++i) {
-  		for (let j = 0; j < this.nTiles; ++j) {
-  			if (mazeM[i][j] == -1) {
-  					this.maze.graphics.drawRect(i*this.tileSize, j*this.tileSize, this.tileSize, this.tileSize);
-	  		}
-  		}
-  	}
+    this.maze.graphics.clear();
+    this.maze.graphics.beginFill('#ea2');
+    for (let i = 0; i < this.nTiles; ++i) {
+      for (let j = 0; j < this.nTiles; ++j) {
+        if (mazeM[i][j] == -1) {
+            this.maze.graphics.drawRect(i*this.tileSize, j*this.tileSize, this.tileSize, this.tileSize);
+        }
+      }
+    }
   }
-  isWall({x, y}) {
+  isWall({ x, y }) {
     x = Math.floor(x/this.tileSize);
     y = Math.floor(y/this.tileSize);
     if (x < 0 || y < 0 || x >= this.nTiles || y >= this.nTiles) return false;
@@ -112,16 +112,20 @@ export class CanvasGame {
       delete this.remotePlayers[id];
     }
   }
-  moveRemotePlayer({id, x, y}) {
-    if (this.remotePlayers.hasOwnProperty(id)) {
-      this.remotePlayers[id].setPos({x, y});
-    } else {
-      this.registerRemotePlayer({id, x, y});
+  moveRemotePlayer({ id, x, y }) {
+    if (!this.isWall({ x, y })) {
+      if (this.remotePlayers.hasOwnProperty(id)) {
+        this.remotePlayers[id].setPos({x, y});
+      } else {
+        this.registerRemotePlayer({id, x, y});
+      }
     }
   }
   moveLocalPlayer({x, y}) {
-    this.localPlayer.setPos({x, y});
-    this.updateContainer();
+    if (!this.isWall({ x, y })) {
+      this.localPlayer.setPos({ x, y });
+      this.updateContainer();
+    }
   }
   fireBullet({ x, y }) {
     now = Date.now();
@@ -146,7 +150,7 @@ export class CanvasGame {
     this.bg.graphics.beginFill('#222').drawRect(0,0,this.stage.canvas.width, this.stage.canvas.height);
     if (this.localPlayer !== null) {
       this.updateContainer();
-  	}
+    }
     this.updateMaze();
   }
 }

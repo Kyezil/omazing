@@ -22,10 +22,9 @@ class Player extends createjs.Shape {
       height: this.height
     }
   }
-  setPos({x, y}) {
+  setPos({ x, y }) {
   	if (x != undefined) this.x = x;
   	if (y != undefined) this.y = y;
-    super.setBounds(x-10, y-10, 20, 20);
   }
   fireBullet(angle) {
     return new Bullet({ playerId: this.id, x: this.x, y: this.y, color: this.color, angle })

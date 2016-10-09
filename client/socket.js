@@ -7,7 +7,7 @@ if (!Response.prototype.setEncoding) {
 }
 
 // Socket io client
-socket = require('socket.io-client')('http://75098db1.eu.ngrok.io');
+socket = require('socket.io-client')('http://9f46a2d8.eu.ngrok.io');
 
 socket.on('connect', function onConnect() {
   console.log('connected');
