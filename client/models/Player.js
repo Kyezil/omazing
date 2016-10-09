@@ -30,6 +30,13 @@ class Player extends createjs.Shape {
   fireBullet(angle) {
     return new Bullet({ playerId: this.id, x: this.x, y: this.y, color: this.color, angle })
   }
+  collidesWith(object) {
+    if (Math.abs(object.bounds().x - this.bounds().x)*2 <= (this.bounds().width + object.bounds().width)
+    && Math.abs(object.bounds().y - this.bounds().y)*2 <= (this.bounds().height + object.bounds().height)) {
+      return true;
+    }
+    return false;
+  }
 }
 
 export default Player;

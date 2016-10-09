@@ -68,12 +68,10 @@ export class CanvasGame {
       }
 
       for (const player of players) {
-        if (Math.abs(bullet.bounds().x - player.bounds().x)*2 <= (player.bounds().width + bullet.bounds().width)
-        && Math.abs(bullet.bounds().y - player.bounds().y)*2 <= (player.bounds().height + bullet.bounds().height)) {
+        if (player.collidesWith(bullet)) {
           this.container.removeChild(bullet);
           this.bullets.splice(i, 1);
-          console.log('dead');
-        };
+        }
       }
     }
   }
