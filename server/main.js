@@ -36,7 +36,7 @@ Meteor.startup(() => {
       player = game.getPlayer(this.id);
       player.move(keys);
       data = { id: this.id, x: player.x, y: player.y };
-      console.log(data);
+      // console.log(data);
       this.emit('player moved', data);
       this.broadcast.emit('player moved', data);
     });

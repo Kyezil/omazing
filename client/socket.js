@@ -19,29 +19,29 @@ socket.on('disconnect', function onDisconnect() {
 });
 
 socket.on('register local player', function onLocalPlayer(player) {
-  console.log('register local player');
+  // console.log('register local player');
   game.registerLocalPlayer(player);
 });
 
 socket.on('register remote player', function onRemotePlayer(player) {
-  console.log('register remote player');
+  // console.log('register remote player');
   game.registerRemotePlayer(player);
 });
 
 socket.on('register remote players', function onRemotePlayers(players) {
-  console.log('register remote players');
+  // console.log('register remote players');
   for (const player of players) {
     game.registerRemotePlayer(player);
   }
 });
 
 socket.on('remove player', function removePlayer(playerId) {
-  console.log('remove player', playerId);
+  // console.log('remove player', playerId);
   game.removePlayer(playerId);
 });
 
 socket.on('player moved', function onMovePlayer({ id, x, y }) {
-  console.log('player moved: ', id, x, y);
+  // console.log('player moved: ', id, x, y);
   if (socket.id == id) {
     game.moveLocalPlayer({ x, y });
   } else {
@@ -50,6 +50,6 @@ socket.on('player moved', function onMovePlayer({ id, x, y }) {
 });
 
 socket.on('bullet fired', function onBulletFired(bullet) {
-  console.log('Fired bullet', bullet);
+  // console.log('Fired bullet', bullet);
   game.registerBullet(bullet);
 });
