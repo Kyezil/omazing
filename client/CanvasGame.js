@@ -62,7 +62,7 @@ export class CanvasGame {
   		for (let j = 0; j < this.nTiles/3; ++j) {
   			if (mazeM[i][j] == -1) {
   				if (j >= 1 && mazeM[i][j-1] == -1) {
-  					this.maze.graphics.drawRect(i*this.tileSize*3-1, j*this.tileSize*3+1, this.tileSize, this.tileSize*2);
+  					this.maze.graphics.drawRect(i*this.tileSize*3+1, j*this.tileSize*3-1, this.tileSize, this.tileSize*2);
   				}
   				this.maze.graphics.drawRect(i*this.tileSize*3+1, j*this.tileSize*3+1, this.tileSize, this.tileSize);
   				if (i >= 1 && mazeM[i-1][j] == -1) {
