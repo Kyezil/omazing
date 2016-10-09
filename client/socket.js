@@ -7,7 +7,7 @@ if (!Response.prototype.setEncoding) {
 }
 
 // Socket io client
-socket = require('socket.io-client')('http://66b4b9e1.ngrok.io');
+socket = require('socket.io-client')('http://e023ee77.eu.ngrok.io');
 
 socket.on('connect', function onConnect() {
   console.log('connected');
@@ -41,7 +41,7 @@ socket.on('remove player', function removePlayer(playerId) {
 });
 
 socket.on('player moved', function onMovePlayer({ id, x, y }) {
-  // console.log('player moved: ', id, x, y);
+  console.log('player moved: ', id, x, y);
   if (socket.id == id) {
     game.moveLocalPlayer({ x, y });
   } else {

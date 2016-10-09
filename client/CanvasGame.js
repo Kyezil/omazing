@@ -61,26 +61,20 @@ export class CanvasGame {
       now = Date.now();
       bullet.x = bullet.startX + bullet.speed*(now-bullet.timestamp)/1000*Math.cos(bullet.angle);
       bullet.y = bullet.startY + bullet.speed*(now-bullet.timestamp)/1000*(-Math.sin(bullet.angle));
-      bullet.setBounds(bullet.x-5, bullet.y-5, 10, 10);
 
-      // const players = Object.keys(this.remotePlayers).map((key) => this.remotePlayers[key]);
-      // if (bullet.playerId != this.localPlayer.id) {
-      //   players.push(this.localPlayer);
-      // }
-      //
-      // for (const player of players) {
-      //   const bulletGlobal = this.container.localToGlobal(bullet.getBounds().x, bullet.getBounds().y);
-      //   const playerGlobal = this.container.localToGlobal(player.getBounds().x, player.getBounds().y);
-      //
-      //   if (Math.abs(bulletGlobal.x - playerGlobal.x)*2 <= (player.getBounds().width + bullet.getBounds().width)
-      //   && Math.abs(bulletGlobal.y - playerGlobal.y)*2 <= (player.getBounds().height + bullet.getBounds().height)) {
-      //     console.log('bullet', bulletGlobal.x, bulletGlobal.y, bullet.getBounds().width, bullet.getBounds().height);
-      //     console.log('player', playerGlobal.x, playerGlobal.y, player.getBounds().width, player.getBounds().height);
-      //     this.container.removeChild(bullet);
-      //     this.bullets.splice(i, 1);
-      //     console.log('dead');
-      //   };
-      // }
+      const players = Object.keys(this.remotePlayers).map((key) => this.remotePlayers[key]);
+      if (bullet.playerId != this.localPlayer.id) {
+        players.push(this.localPlayer);
+      }
+
+      for (const player of players) {
+        if (Math.abs(bullet.bounds().x - player.bounds().x)*2 <= (player.bounds().width + bullet.bounds().width)
+        && Math.abs(bullet.bounds().y - player.bounds().y)*2 <= (player.bounds().height + bullet.bounds().height)) {
+          this.container.removeChild(bullet);
+          this.bullets.splice(i, 1);
+          console.log('dead');
+        };
+      }
     }
   }
   registerRemotePlayer(p) {
