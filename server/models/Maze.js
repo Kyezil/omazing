@@ -31,7 +31,7 @@ class Maze {
 		const rooms = [];
 		for (let i = 0; i < this.numRoomTries; ++i) {
 			const size = rngRange(1, 3+this.roomExtraSize)*2 + 1;
-			const rectangularity = rngRange(0, 1 + size/2)*2;
+			const rectangularity = rngRange(1, 1 + size/2)*3;
 			let width = size;
 			let height = size;
 			if (oneIn(2)) width += rectangularity;
@@ -103,8 +103,8 @@ class Maze {
 		const regs = Array.apply(null, Array(this.size.n)).map(Number.prototype.valueOf, -1);
 		const regions = regs.map((i) => regs.slice());
 		this.addRooms(regions);
-		this.fillMaze(regions);
-		this.connectRegions(regions);
+		//this.fillMaze(regions);
+		//this.connectRegions(regions);
 		return regions;
 	}
 	printMatrix(regions) {
@@ -119,4 +119,3 @@ class Maze {
 		}
 	}
 }
-
